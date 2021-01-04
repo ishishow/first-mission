@@ -9,13 +9,13 @@ class TaxiAlgo:
             elif time_status == "Price increase":
                 speed_per_hour, hourA, hourB, secondA, secondB = self.timeConf(data, i)
                 coefficient = hourA // 24 + 1
-                total_distance += speed_per_hour * (22.0 * 3600 * coefficient - secondA) / 3600
-                total_distance += speed_per_hour * (secondB - 22.0 * 3600 * coefficient) / 3600 * 1.5
+                total_distance += speed_per_hour * (22.0 * 3600 * coefficient - secondA) / 3600 * 1000
+                total_distance += speed_per_hour * (secondB - 22.0 * 3600 * coefficient) / 3600 * 1.5 * 1000
             elif time_status == "Price decrease":
                 speed_per_hour, hourA, hourB, secondA, secondB = self.timeConf(data, i)
                 coefficient = hourB // 24 + 1
-                total_distance += speed_per_hour * (5.0 * 3600 * coefficient - secondA) / 3600 * 1.5
-                total_distance += speed_per_hour * (secondB - 5.0 * 3600 * coefficient) / 3600
+                total_distance += speed_per_hour * (5.0 * 3600 * coefficient - secondA) / 3600 * 1.5 * 1000
+                total_distance += speed_per_hour * (secondB - 5.0 * 3600 * coefficient) / 3600 * 1000
             else:
                 total_distance += float(data[i].split(" ")[1])
 
@@ -23,25 +23,22 @@ class TaxiAlgo:
 
     def isNightSurcharge(self, before_hour, after_hour):
         if ((before_hour % 24) < 5 or (before_hour % 24) >= 22) and ((after_hour % 24) < 5 or (after_hour % 24) >= 22):
-            print("Night")
             return "Night"
         elif (after_hour % 24) < 5 or (after_hour % 24) >= 22:
-            print("Price increase")
             return "Price increase"
         elif (before_hour % 24) < 5 or (before_hour % 24) >= 22:
-            print("Price decrease")
             return "Price decrease"
         else:
-            print("notNight")
             return "notNight"
 
     def costCalc(self, data):
         sum_cost = 0
         sum_distance = self.sumDistance(data)
-        print(sum_distance)
+        print("total distance is " + str(sum_distance) + "m")
         sum_cost += self.distanceCost(sum_distance)
-        print(sum_cost)
+        print("distance cost is " + str(sum_cost) + " yen")
         sum_cost += self.sumLowSpeedTimeCost(data)
+        print("lowspeedtime cost is " + str(self.sumLowSpeedTimeCost(data)) + " yen")
         return sum_cost
 
     def timeConf(self, data, i):
@@ -63,7 +60,7 @@ class TaxiAlgo:
                     sum_low_speed_time += (secondB - secondA) * 1.5
                 else:
                     sum_low_speed_time += (secondB - secondA)
-
+        sum_low_speed_time -= 90.0
         while sum_low_speed_time > 0:
             sum_low_speed_time -= 90.0
             sum_low_speed_time_cost += 80
