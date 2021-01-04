@@ -1,5 +1,5 @@
-def fileLoader(file_path):
+def loadByPath(file_path):
     f = open(file_path, 'r', encoding='UTF-8')
-    data = f.read().split("\n")
+    drive_log = f.read().split("\n")
     f.close()
-    return data
+    return drive_log
