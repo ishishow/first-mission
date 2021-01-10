@@ -1,9 +1,9 @@
 import service
 import sys
 
-answer = [1050, 970, 810, 490, 970, 810, 490, 490]
+answer = [1050, 970, 810, 490, 970, 810, 490, 490, 410, 970, 810, 490]
 
-for i in range(1, 9):
+for i in range(1, 13):
     taxiAlgo = service.taxi_algo.TaxiAlgo()
     drive_log = service.file_loader.loadByPath("src/test" + str(i) + ".txt")
     try :
