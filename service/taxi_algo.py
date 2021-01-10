@@ -21,13 +21,13 @@ class TaxiAlgo:
                 if time_status == "Night":
                     sum_low_speed_time += (secondB - secondA) * self.NIGHT_SURCHAGE
                 elif time_status == "Price increase":
-                    coefficient = hourA // 24 + 1
-                    sum_low_speed_time += (22.0 * 3600 * coefficient - secondA)
-                    sum_low_speed_time += (secondB - 22.0 * 3600 * coefficient) * self.NIGHT_SURCHAGE
+                    coefficient = hourA // 24
+                    sum_low_speed_time += ((22.0 + coefficient * 24) * 3600 - secondA)
+                    sum_low_speed_time += (secondB - (22.0 + coefficient * 24) * 3600) * self.NIGHT_SURCHAGE
                 elif time_status == "Price decrease":
-                    coefficient = hourA // 24 + 1
-                    sum_low_speed_time += (5.0 * 3600 * coefficient - secondA) * self.NIGHT_SURCHAGE
-                    sum_low_speed_time += (secondB - 5.0 * 3600 * coefficient)
+                    coefficient = hourA // 24
+                    sum_low_speed_time += ((5.0 + coefficient * 24) * 3600 - secondA) * self.NIGHT_SURCHAGE
+                    sum_low_speed_time += (secondB - (5.0 + coefficient * 24) * 3600)
                 else:
                     sum_low_speed_time += (secondB - secondA)
         return sum_low_speed_time
@@ -40,14 +40,14 @@ class TaxiAlgo:
                 total_distance += float(data[i].split(" ")[1]) * self.NIGHT_SURCHAGE
             elif time_status == "Price increase":
                 speed_per_hour, hourA, hourB, secondA, secondB = self.timeConf(data, i)
-                coefficient = hourA // 24 + 1
-                total_distance += speed_per_hour * (22.0 * 3600 * coefficient - secondA) / 3600 * 1000
-                total_distance += speed_per_hour * (secondB - 22.0 * 3600 * coefficient) / 3600 * self.NIGHT_SURCHAGE * 1000
+                coefficient = hourA // 24
+                total_distance += speed_per_hour * ((22.0 + coefficient * 24) * 3600 - secondA) / 3600 * 1000
+                total_distance += speed_per_hour * (secondB - (22.0 + coefficient * 24) * 3600) / 3600 * self.NIGHT_SURCHAGE * 1000
             elif time_status == "Price decrease":
                 speed_per_hour, hourA, hourB, secondA, secondB = self.timeConf(data, i)
-                coefficient = hourB // 24 + 1
-                total_distance += speed_per_hour * (5.0 * 3600 * coefficient - secondA) / 3600 * self.NIGHT_SURCHAGE * 1000
-                total_distance += speed_per_hour * (secondB - 5.0 * 3600 * coefficient) / 3600 * 1000
+                coefficient = hourB // 24
+                total_distance += speed_per_hour * ((5.0 + coefficient * 24) * 3600 - secondA) / 3600 * self.NIGHT_SURCHAGE * 1000
+                total_distance += speed_per_hour * (secondB - (5.0 + coefficient * 24) * 3600) / 3600 * 1000
             else:
                 total_distance += float(data[i].split(" ")[1])
         return total_distance
