@@ -8,7 +8,7 @@ for i in range(1, 13):
     drive_log = service.file_loader.loadByPath("src/test" + str(i) + ".txt")
     try :
         print("------------------test" + str(i) + "-------------------")
-        sum_cost = taxiAlgo.costCalc(drive_log)
+        sum_cost = taxiAlgo.calcFare(drive_log)
         print(int(sum_cost))
         print(int(sum_cost) == answer[i - 1], "\n")
     except:
