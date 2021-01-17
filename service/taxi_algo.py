@@ -2,15 +2,15 @@ class TaxiAlgo:
     NIGHT_SURCHARGE = 1.25
 
     def calcFare(self, data):
-        sum_cost = 0
+        total_fare = 0
         sum_distance = self.sumDistance(data)
         print("total distance is " + str(sum_distance) + "m")
-        sum_cost += self.distanceCost(sum_distance)
-        print("distance cost is " + str(sum_cost) + " yen")
+        total_fare += self.distanceCost(sum_distance)
+        print("distance cost is " + str(total_fare) + " yen")
         sum_low_speed_time = self.sumLowSpeedTime(data)
-        sum_cost += self.lowSpeedTimeCost(sum_low_speed_time)
+        total_fare += self.lowSpeedTimeCost(sum_low_speed_time)
         print("lowspeedtime cost is " + str(self.lowSpeedTimeCost(sum_low_speed_time)) + " yen")
-        return sum_cost
+        return total_fare
 
     def sumLowSpeedTime(self, data):
         sum_low_speed_time = 0
