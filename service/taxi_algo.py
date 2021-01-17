@@ -1,5 +1,5 @@
 class TaxiAlgo:
-    NIGHT_SURCHARGE = 1.5
+    NIGHT_SURCHARGE = 1.25
 
     def calcFare(self, data):
         sum_cost = 0
