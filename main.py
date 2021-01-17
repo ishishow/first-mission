@@ -5,7 +5,7 @@ answer = [1050, 970, 810, 490, 970, 810, 490, 490, 410, 970, 810, 490]
 
 for i in range(1, 13):
     taxiAlgo = service.taxi_algo.TaxiAlgo()
-    drive_log = service.file_loader.loadByPath("src/test" + str(i) + ".txt")
+    drive_log = service.file_loader.loadByPath("test/test" + str(i) + ".txt")
     try :
         print("------------------test" + str(i) + "-------------------")
         sum_cost = taxiAlgo.calcFare(drive_log)
